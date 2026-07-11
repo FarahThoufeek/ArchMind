@@ -1,0 +1,772 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ArchMind AI — Hackathon Concept</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1f2328;
+    background: #ffffff;
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  /* ── TYPOGRAPHY ── */
+  h1  { font-size: 28px; font-weight: 700; color: #1f2328; margin-bottom: 4px; }
+  h2  { font-size: 17px; font-weight: 700; color: #1f2328; margin: 36px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #e5e7eb; }
+  h3  { font-size: 14px; font-weight: 700; color: #1f2328; margin: 14px 0 4px; }
+  p   { color: #1f2328; margin-bottom: 10px; }
+  .muted { color: #57606a; font-size: 13px; }
+  ul  { padding-left: 18px; color: #57606a; font-size: 13px; margin-bottom: 8px; }
+  ul li { margin-bottom: 3px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: #1f2328; border-radius: 10px;
+    padding: 32px 36px; margin-bottom: 36px;
+  }
+  .hero h1 { color: #ffffff; }
+  .hero-sub { color: #9ca3af; font-size: 14px; margin-top: 6px; margin-bottom: 20px; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 500; color: #d1d5db;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .07em;
+    color: #3b82d4; margin-bottom: 4px;
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 12px;
+    font-size: 11px; font-weight: 600; vertical-align: middle;
+  }
+  .b-blue   { background: #dbeafe; color: #1d4ed8; }
+  .b-purple { background: #ede9fe; color: #5b21b6; }
+  .b-green  { background: #dcfce7; color: #166534; }
+  .b-yellow { background: #fef9c3; color: #854d0e; }
+  .b-red    { background: #fee2e2; color: #991b1b; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid #3b82d4; background: #f0f7ff;
+    padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 14px 0;
+  }
+  .callout.red    { border-left-color: #ef4444; background: #fff5f5; }
+  .callout.green  { border-left-color: #22c55e; background: #f0fdf4; }
+  .callout.yellow { border-left-color: #f59e0b; background: #fffbeb; }
+  .callout p { margin-bottom: 0; font-size: 13px; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 12px 0 20px; }
+  th {
+    text-align: left; padding: 9px 10px;
+    background: #f7f8fa; border-bottom: 2px solid #e5e7eb;
+    font-weight: 700; color: #1f2328; white-space: nowrap;
+  }
+  td { padding: 8px 10px; border-bottom: 1px solid #f0f1f3; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+
+  /* ── SCORE BAR ── */
+  .sbar-wrap { display: flex; align-items: center; gap: 8px; }
+  .sbar      { height: 6px; background: #e5e7eb; border-radius: 3px; flex: 1; min-width: 60px; }
+  .sfill     { height: 6px; border-radius: 3px; }
+  .s-red    { background: #ef4444; }
+  .s-amber  { background: #f59e0b; }
+  .s-green  { background: #22c55e; }
+  .snum     { font-size: 11px; font-weight: 700; color: #57606a; min-width: 30px; }
+
+  /* ── DOTS ── */
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; }
+  .d-g { background: #22c55e; }
+  .d-y { background: #f59e0b; }
+  .d-r { background: #ef4444; }
+
+  /* ── 2-COL GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .card {
+    border: 1px solid #e5e7eb; border-radius: 8px;
+    padding: 14px 16px; background: #f7f8fa;
+  }
+  .card-title { font-size: 13px; font-weight: 700; color: #1f2328; margin-bottom: 4px; }
+  .card-body  { font-size: 12px; color: #57606a; }
+  .card-icon  { font-size: 18px; margin-bottom: 6px; }
+
+  /* white card variant */
+  .card-w { background: #ffffff; }
+  .card-w .card-title { margin-bottom: 6px; }
+
+  /* ── FLOW ── */
+  .flow { margin: 16px 0; }
+  .flow-step { display: flex; gap: 14px; position: relative; }
+  .flow-step:not(:last-child)::before {
+    content: ''; position: absolute; left: 13px; top: 30px;
+    width: 2px; height: calc(100% + 4px); background: #e5e7eb;
+  }
+  .flow-num {
+    width: 27px; height: 27px; border-radius: 50%;
+    background: #3b82d4; color: #fff; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1;
+  }
+  .flow-body  { padding-bottom: 18px; }
+  .flow-title { font-size: 13px; font-weight: 700; color: #1f2328; }
+  .flow-desc  { font-size: 12px; color: #57606a; margin-top: 2px; }
+
+  /* ── MOCKUP ── */
+  .mockup { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; margin: 16px 0; }
+  .mbar {
+    background: #1f2328; padding: 9px 14px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .mdot  { width: 9px; height: 9px; border-radius: 50%; }
+  .mtitle { color: #fff; font-size: 12px; font-weight: 600; margin-left: 8px; }
+  .mbody { padding: 16px; background: #f7f8fa; }
+  .mlayout { display: flex; gap: 14px; }
+
+  .msidebar {
+    width: 175px; flex-shrink: 0; background: #fff;
+    border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;
+  }
+  .mmain { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .mlabel { font-size: 10px; font-weight: 700; color: #57606a; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 8px; }
+  .ritem {
+    background: #f7f8fa; border: 1px dashed #e5e7eb; border-radius: 5px;
+    height: 46px; display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: #9ca3af; text-align: center; padding: 3px;
+  }
+  .ritem.filled { border-style: solid; background: #dbeafe; border-color: #93c5fd; color: #1d4ed8; }
+
+  .dna-row  { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+  .dna-item { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 5px; padding: 5px 7px; font-size: 10px; }
+  .dna-key  { color: #57606a; font-size: 9px; text-transform: uppercase; font-weight: 700; }
+  .dna-val  { color: #1f2328; font-size: 10px; font-weight: 700; margin-top: 1px; }
+
+  .mbtn { display: block; width: 100%; background: #3b82d4; color: #fff; border-radius: 5px; padding: 7px; font-size: 11px; font-weight: 700; text-align: center; margin-top: 6px; }
+  .mbtn-out { display: block; width: 100%; background: #fff; color: #3b82d4; border: 1px solid #3b82d4; border-radius: 5px; padding: 6px; font-size: 10px; font-weight: 600; text-align: center; margin-top: 5px; }
+
+  .cardrow { display: flex; gap: 8px; }
+  .ocard { flex: 1; background: #fff; border: 1px solid #e5e7eb; border-radius: 7px; padding: 9px; }
+  .olabel { font-size: 9px; font-weight: 700; color: #57606a; text-transform: uppercase; margin-bottom: 5px; }
+  .oph { border: 1px solid #e5e7eb; border-radius: 5px; height: 52px; display: flex; align-items: center; justify-content: center; }
+  .ophtxt { font-size: 9px; color: #9ca3af; text-align: center; }
+
+  .swatch-row { display: flex; gap: 5px; }
+  .swatch { flex: 1; height: 32px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+
+  .mchat { background: #fff; border: 1px solid #e5e7eb; border-radius: 7px; padding: 10px; }
+  .msg   { display: flex; gap: 7px; margin-bottom: 7px; }
+  .av    { width: 20px; height: 20px; border-radius: 50%; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .av-ai   { background: #3b82d4; color: #fff; }
+  .av-user { background: #e5e7eb; color: #57606a; }
+  .bbl { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 7px; padding: 5px 9px; font-size: 10px; color: #1f2328; }
+  .bbl.ai  { background: #dbeafe; border-color: #93c5fd; }
+  .mcinput { display: flex; gap: 6px; margin-top: 6px; }
+  .mcinp { flex: 1; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 5px; padding: 5px 8px; font-size: 10px; color: #9ca3af; }
+  .mcsend { background: #3b82d4; color: #fff; border: none; border-radius: 5px; padding: 5px 10px; font-size: 10px; font-weight: 600; }
+
+  /* ── ARCH STACK ── */
+  .arch-layer { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 6px; background: #f7f8fa; }
+  .arch-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #57606a; margin-bottom: 7px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { background: #fff; border: 1px solid #e5e7eb; border-radius: 5px; padding: 4px 10px; font-size: 12px; color: #1f2328; font-weight: 500; }
+  .chip.blue   { background: #dbeafe; border-color: #93c5fd; color: #1d4ed8; }
+  .chip.purple { background: #ede9fe; border-color: #c4b5fd; color: #5b21b6; }
+  .chip.green  { background: #dcfce7; border-color: #86efac; color: #166534; }
+  .chip.yellow { background: #fef9c3; border-color: #fde047; color: #854d0e; }
+  .arch-arrow  { text-align: center; color: #cbd5e1; font-size: 16px; margin: 2px 0; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 36px 0; }
+
+  /* ── FOOTER ── */
+  .footer { margin-top: 60px; padding-top: 16px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #9ca3af; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="hero">
+    <div class="section-label" style="color:#93c5fd">Hackathon Concept</div>
+    <h1>ArchMind AI</h1>
+    <p class="hero-sub">Your AI Architecture &amp; Interior Design Partner — From Pinterest Board to Blueprint</p>
+    <div class="hero-pills">
+      <span class="pill">Reference-to-Design Pipeline</span>
+      <span class="pill">Multi-modal AI</span>
+      <span class="pill">Architecture + Interiors</span>
+      <span class="pill">Client-Facing</span>
+      <span class="pill">Conversational</span>
+    </div>
+  </div>
+
+
+  
+  <div class="section-label">01 — The Problem</div>
+  <h2>Why Does This Need to Exist?</h2>
+  <p>Clients come to architects and designers with folders of Pinterest screenshots, Instagram saves, and magazine clippings. Translating that visual chaos into a coherent design brief — and then into spatial reality — takes <strong>weeks of discovery meetings, manual mood boarding, and iterative back-and-forth.</strong></p>
+
+  <div class="callout red">
+    <p><strong>Core Pain:</strong> No tool today takes a client's raw inspiration images, understands their underlying design intent, and produces a unified architectural concept — exterior form, interior spaces, materials, and mood board — in a single conversation.</p>
+  </div>
+
+
+  
+  <div class="section-label">02 — Gap Analysis</div>
+  <h2>What Already Exists &amp; What It Misses</h2>
+  <p class="muted">13 tools surveyed across AI image generation, interior styling, architecture planning, and full-service design platforms.</p>
+
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Category</th><th>What It Does</th><th>Gap Score</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>RoomGPT</strong></td>
+        <td><span class="badge b-blue">Interior AI</span></td>
+        <td>Single room photo → redesign in chosen style</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-red" style="width:86%"></div></div><span class="snum">4.3/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>InteriorAI.app</strong></td>
+        <td><span class="badge b-blue">Interior AI</span></td>
+        <td>Single-image style transfer for room redesign</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-red" style="width:84%"></div></div><span class="snum">4.2/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Spacely AI</strong></td>
+        <td><span class="badge b-blue">Interior AI</span></td>
+        <td>Room rendering + style presets, no client dialogue</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-red" style="width:78%"></div></div><span class="snum">3.9/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Collov AI</strong></td>
+        <td><span class="badge b-blue">Interior AI</span></td>
+        <td>Professional interior renders, style presets library</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-red" style="width:76%"></div></div><span class="snum">3.8/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Reimagine Home</strong></td>
+        <td><span class="badge b-blue">Interior AI</span></td>
+        <td>Exterior + interior redesign from photo, style picker only</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:72%"></div></div><span class="snum">3.6/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Maket.ai</strong></td>
+        <td><span class="badge b-purple">Architecture</span></td>
+        <td>Text-prompt → floor plan generation for architects</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-red" style="width:80%"></div></div><span class="snum">4.0/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>ArchitectGPT</strong></td>
+        <td><span class="badge b-purple">Architecture</span></td>
+        <td>Text + image → exterior/interior architectural renders</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:68%"></div></div><span class="snum">3.4/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Archi.ai</strong></td>
+        <td><span class="badge b-purple">Architecture</span></td>
+        <td>Architectural concepts from sketches / prompts</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:70%"></div></div><span class="snum">3.5/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Planner 5D</strong></td>
+        <td><span class="badge b-yellow">CAD + AI</span></td>
+        <td>2D/3D floor plan editor with AI room detection</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:65%"></div></div><span class="snum">3.2/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Homestyler</strong></td>
+        <td><span class="badge b-yellow">CAD + AI</span></td>
+        <td>3D design platform + AI render, manual workflow</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:62%"></div></div><span class="snum">3.1/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Midjourney</strong></td>
+        <td><span class="badge b-green">Gen AI</span></td>
+        <td>World-class image synthesis, --iref flag, no design intelligence</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:60%"></div></div><span class="snum">3.0/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>GPT-4o</strong></td>
+        <td><span class="badge b-green">Gen AI</span></td>
+        <td>Vision + dialogue, no architecture-specific pipeline</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:58%"></div></div><span class="snum">2.9/5</span></div></td>
+      </tr>
+      <tr>
+        <td><strong>Adobe Firefly</strong></td>
+        <td><span class="badge b-green">Gen AI</span></td>
+        <td>Style reference + generative fill, no spatial intelligence</td>
+        <td><div class="sbar-wrap"><div class="sbar"><div class="sfill s-amber" style="width:55%"></div></div><span class="snum">2.7/5</span></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Capability Gap Matrix</h3>
+  <p class="muted">8 critical capabilities a complete AI design partner needs — checked against existing tools.</p>
+  <table style="margin-top:8px">
+    <thead>
+      <tr><th>Capability</th><th>RoomGPT / InteriorAI</th><th>Maket / ArchGPT</th><th>Midjourney</th><th>ArchMind AI ✦</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Multi-image reference board</strong></td>
+        <td><span class="dot d-r"></span>Single image</td>
+        <td><span class="dot d-r"></span>Text only</td>
+        <td><span class="dot d-y"></span>Partial</td>
+        <td><span class="dot d-g"></span>Full board</td>
+      </tr>
+      <tr>
+        <td><strong>Design DNA extraction</strong></td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-g"></span>Automated</td>
+      </tr>
+      <tr>
+        <td><strong>Exterior architecture generation</strong></td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-g"></span>Yes</td>
+        <td><span class="dot d-y"></span>Generic</td>
+        <td><span class="dot d-g"></span>Concept renders</td>
+      </tr>
+      <tr>
+        <td><strong>Exterior + interior unified concept</strong></td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-g"></span>Unified pipeline</td>
+      </tr>
+      <tr>
+        <td><strong>Floor plan / space layout</strong></td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-y"></span>Basic</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-g"></span>Room-by-room</td>
+      </tr>
+      <tr>
+        <td><strong>Conversational client refinement</strong></td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-g"></span>Multi-turn dialogue</td>
+      </tr>
+      <tr>
+        <td><strong>Material / finish palette</strong></td>
+        <td><span class="dot d-y"></span>Presets only</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-r"></span>No</td>
+        <td><span class="dot d-g"></span>Extracted + sourced</td>
+      </tr>
+      <tr>
+        <td><strong>Client-ready deliverable package</strong></td>
+        <td><span class="dot d-r"></span>Single render</td>
+        <td><span class="dot d-r"></span>Single render</td>
+        <td><span class="dot d-r"></span>Image only</td>
+        <td><span class="dot d-g"></span>Full package</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:6px">
+    <p><strong>The Gap in One Sentence:</strong> Every existing tool handles one slice of the pipeline — generate a render, OR plan a floor, OR apply a style preset — but none connects <em>client inspiration → Design DNA extraction → unified architecture + interior concept → iterative dialogue → deliverable package.</em> <strong>That end-to-end intelligence is the gap ArchMind AI fills.</strong></p>
+  </div>
+
+
+  <hr class="divider" />
+
+
+  
+  <div class="section-label">03 — The Solution</div>
+  <h2>ArchMind AI — What It Does</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon">🖼</div>
+      <div class="card-title">Reference Board Intake</div>
+      <div class="card-body">Upload any number of inspiration images — Pinterest, Instagram, photos — with priority labels in one session.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧬</div>
+      <div class="card-title">Design DNA Extraction</div>
+      <div class="card-body">Vision AI reads across all images: style archetype, colour palette, material language, and spatial mood.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏛</div>
+      <div class="card-title">Unified Concept Generation</div>
+      <div class="card-body">Exterior renders, interior spaces, and a floor plan schematic — all coherent with the same Design DNA.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <div class="card-title">Conversational Refinement</div>
+      <div class="card-body">"Make it warmer", "add a mezzanine", "more open-plan" — live re-generation per chat turn.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Deliverable Package</div>
+      <div class="card-body">Exports renders, mood board, material palette, space notes, and budget tier indication as a PDF brief.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <div class="card-title">Architect Hand-off Mode</div>
+      <div class="card-body">Exports a structured JSON design brief to feed directly into Revit, AutoCAD, or IFC workflows.</div>
+    </div>
+  </div>
+
+  <h3>User Journey</h3>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-body">
+        <div class="flow-title">Client starts a project</div>
+        <div class="flow-desc">Names the project, sets property type (villa, apartment, commercial), rough size and budget tier.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-body">
+        <div class="flow-title">Upload reference board</div>
+        <div class="flow-desc">Drag-and-drop 3–20 images. Label them: "love this", "like parts of it", or "just for mood".</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-body">
+        <div class="flow-title">AI extracts Design DNA</div>
+        <div class="flow-desc">GPT-4o Vision analyses the board: style (e.g. Contemporary Arabian), palette (#E8D5B7, #2C2C2C), materials (concrete, brass, travertine), mood (open, warm, airy), and lighting character.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-body">
+        <div class="flow-title">Concept generation</div>
+        <div class="flow-desc">3 exterior renders, 3 key interior renders (living, kitchen, master), schematic floor plan, and material mood board — all in one pass.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-body">
+        <div class="flow-title">Client dialogue &amp; refinement</div>
+        <div class="flow-desc">"I love concept A but want higher ceilings and a desert garden feel." AI updates renders and adjusts design parameters accordingly.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">6</div>
+      <div class="flow-body">
+        <div class="flow-title">Export design package</div>
+        <div class="flow-desc">Full brief: renders, DNA summary, space program notes, material palette with sourcing, next-steps checklist.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Target Users</h3>
+  <table>
+    <thead><tr><th>Persona</th><th>Pain Solved</th><th>Value Delivered</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Homeowner</strong></td><td>Can't articulate vision to architect</td><td>Turns Pinterest board into professional brief in 10 min</td></tr>
+      <tr><td><strong>Architect / Designer</strong></td><td>Slow discovery, misaligned client expectations</td><td>Arrives at first meeting with a client-validated concept</td></tr>
+      <tr><td><strong>Real Estate Developer</strong></td><td>Needs rapid concept visuals for investor pitches</td><td>Development concept renders in hours, not weeks</td></tr>
+      <tr><td><strong>Design Student</strong></td><td>Needs quick concept ideation for studio projects</td><td>AI co-pilot that keeps up with their creative pace</td></tr>
+    </tbody>
+  </table>
+
+
+  <hr class="divider" />
+
+
+  
+  <div class="section-label">04 — Prototype UI</div>
+  <h2>Interface Mockup</h2>
+  <p class="muted">High-fidelity wireframe. Left panel = reference board + Design DNA. Right panel = generated outputs + refinement chat.</p>
+
+  <div class="mockup">
+    <div class="mbar">
+      <span class="mdot" style="background:#ef4444"></span>
+      <span class="mdot" style="background:#f59e0b"></span>
+      <span class="mdot" style="background:#22c55e"></span>
+      <span class="mtitle">ArchMind AI — Dream Home · Dubai Hills</span>
+    </div>
+    <div class="mbody">
+      <div class="mlayout">
+
+        
+        <div class="msidebar">
+          <div class="mlabel">Reference Board</div>
+          <div class="ref-grid">
+            <div class="ritem filled">Exterior<br />Modern Villa</div>
+            <div class="ritem filled">Living<br />Warm Minimal</div>
+            <div class="ritem filled">Kitchen<br />Marble+Brass</div>
+            <div class="ritem filled">Master Bed<br />Desert Palette</div>
+            <div class="ritem filled">Staircase<br />Floating Steps</div>
+            <div class="ritem">+ Add Image</div>
+          </div>
+
+          <div class="mlabel" style="margin-top:8px">Design DNA</div>
+          <div class="dna-row">
+            <div class="dna-item"><div class="dna-key">Style</div><div class="dna-val">Contemporary Arabian</div></div>
+          </div>
+          <div class="dna-row">
+            <div class="dna-item"><div class="dna-key">Mood</div><div class="dna-val">Warm · Airy · Open</div></div>
+          </div>
+          <div class="dna-row">
+            <div class="dna-item" style="flex:1">
+              <div class="dna-key">Palette</div>
+              <div style="display:flex;gap:4px;margin-top:4px">
+                <div style="width:14px;height:14px;border-radius:3px;background:#E8D5B7;border:1px solid #ddd"></div>
+                <div style="width:14px;height:14px;border-radius:3px;background:#2C2C2C;border:1px solid #ddd"></div>
+                <div style="width:14px;height:14px;border-radius:3px;background:#C9B99A;border:1px solid #ddd"></div>
+                <div style="width:14px;height:14px;border-radius:3px;background:#7B6651;border:1px solid #ddd"></div>
+              </div>
+            </div>
+          </div>
+          <div class="dna-row">
+            <div class="dna-item" style="flex:1">
+              <div class="dna-key">Materials</div>
+              <div style="font-size:10px;color:#1f2328;margin-top:2px;line-height:1.5">Travertine · Concrete · Brass · Oak · Linen</div>
+            </div>
+          </div>
+          <div class="mbtn">Generate Concept</div>
+          <div class="mbtn-out">Export Package</div>
+        </div>
+
+        
+        <div class="mmain">
+
+          <div>
+            <div class="mlabel">Generated Concepts</div>
+            <div class="cardrow">
+              <div class="ocard">
+                <div class="olabel">Exterior — Concept A</div>
+                <div class="oph" style="background:#f0ece4;border-color:#d6cab8">
+                  <div class="ophtxt" style="color:#7B6651">Villa render<br />stone + concrete</div>
+                </div>
+              </div>
+              <div class="ocard">
+                <div class="olabel">Living Room</div>
+                <div class="oph" style="background:#f5f0ea;border-color:#d6cab8">
+                  <div class="ophtxt" style="color:#7B6651">Open-plan interior<br />brass + travertine</div>
+                </div>
+              </div>
+              <div class="ocard">
+                <div class="olabel">Floor Plan</div>
+                <div class="oph">
+                  <div class="ophtxt">Schematic layout<br />4-bed / open plan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mlabel">Material Mood Board</div>
+            <div class="swatch-row">
+              <div class="swatch" style="background:#E8D5B7;color:#7B6651">Travertine</div>
+              <div class="swatch" style="background:#2C2C2C;color:#fff">Concrete</div>
+              <div class="swatch" style="background:#C9A96E;color:#fff">Brass</div>
+              <div class="swatch" style="background:#8B6F47;color:#fff">Oak</div>
+              <div class="swatch" style="background:#D8CFC4;color:#7B6651">Linen</div>
+            </div>
+          </div>
+
+          <div class="mchat">
+            <div class="mlabel">Refinement Chat</div>
+            <div class="msg">
+              <div class="av av-ai">AI</div>
+              <div class="bbl ai">I've analysed your 5 reference images. Your Design DNA points to <strong>Contemporary Arabian</strong> — warm stone, open volumes, brass accents, strong indoor-outdoor connection. Shall I generate your concept package?</div>
+            </div>
+            <div class="msg">
+              <div class="av av-user">C</div>
+              <div class="bbl">Yes! And add a courtyard with a water feature.</div>
+            </div>
+            <div class="msg">
+              <div class="av av-ai">AI</div>
+              <div class="bbl ai">A courtyard fits perfectly with your Arabian influence. Adding a riwaq colonnade and a linear water rill to the floor plan. Regenerating Concept A and layout now…</div>
+            </div>
+            <div class="mcinput">
+              <div class="mcinp">Ask anything about your design…</div>
+              <div class="mcsend">Send</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Key UX Principles</h3>
+  <div class="grid2">
+    <div class="card card-w"><div class="card-title">Reference First, Prompt Second</div><div class="card-body">Inverts the usual AI pattern — show images first, then refine in words. No design vocabulary needed from the client.</div></div>
+    <div class="card card-w"><div class="card-title">Design DNA Always Visible</div><div class="card-body">Client sees exactly what AI extracted. Builds trust and creates a living brief they can edit directly.</div></div>
+    <div class="card card-w"><div class="card-title">Exterior + Interior as One System</div><div class="card-body">All renders share the same palette, materials, and proportional language. Coherence is enforced, not left to chance.</div></div>
+    <div class="card card-w"><div class="card-title">Progressive Disclosure</div><div class="card-body">Thumbnails → full renders → floor plan → palette. Never overwhelming the client with too much at once.</div></div>
+  </div>
+
+
+  <hr class="divider" />
+
+
+  
+  <div class="section-label">05 — Technical Architecture</div>
+  <h2>How It's Built</h2>
+
+  <div class="arch-layer">
+    <div class="arch-title">Layer 1 — Client Interface</div>
+    <div class="chips">
+      <span class="chip blue">React / Next.js</span>
+      <span class="chip blue">Drag-and-Drop Reference Board</span>
+      <span class="chip blue">Real-time Render Gallery</span>
+      <span class="chip blue">Chat Interface (WebSocket)</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓</div>
+
+  <div class="arch-layer">
+    <div class="arch-title">Layer 2 — Design DNA Engine (AI Core)</div>
+    <div class="chips">
+      <span class="chip purple">GPT-4o Vision API</span>
+      <span class="chip purple">Multi-image Style Aggregation</span>
+      <span class="chip purple">Palette Extraction (color-thief)</span>
+      <span class="chip purple">Semantic Style Tagging</span>
+      <span class="chip purple">Material Classification</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓</div>
+
+  <div class="arch-layer">
+    <div class="arch-title">Layer 3 — Generative Design Pipeline</div>
+    <div class="chips">
+      <span class="chip green">DALL-E 3 / Stable Diffusion XL</span>
+      <span class="chip green">ControlNet (form control)</span>
+      <span class="chip green">IP-Adapter (style injection)</span>
+      <span class="chip green">Floor Plan Generator (fine-tuned)</span>
+      <span class="chip green">Structured Prompt Builder</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓</div>
+
+  <div class="arch-layer">
+    <div class="arch-title">Layer 4 — Conversation &amp; Refinement</div>
+    <div class="chips">
+      <span class="chip yellow">GPT-4o Dialogue Agent</span>
+      <span class="chip yellow">Design Parameter State Machine</span>
+      <span class="chip yellow">Change Detection → Re-prompt Engine</span>
+      <span class="chip yellow">Version History</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓</div>
+
+  <div class="arch-layer">
+    <div class="arch-title">Layer 5 — Deliverable Export</div>
+    <div class="chips">
+      <span class="chip">PDF Design Brief</span>
+      <span class="chip">Mood Board Compositor</span>
+      <span class="chip">Shareable Project URL</span>
+      <span class="chip">JSON Brief (Revit / IFC)</span>
+    </div>
+  </div>
+
+  <h3>Hackathon MVP Scope</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>Hackathon MVP</th><th>V1 Post-Hackathon</th></tr></thead>
+    <tbody>
+      <tr><td>Reference image upload</td><td><span class="dot d-g"></span>Up to 10 images</td><td>Unlimited + Pinterest import</td></tr>
+      <tr><td>Design DNA extraction</td><td><span class="dot d-g"></span>Style + palette + mood</td><td>+ material sourcing links</td></tr>
+      <tr><td>Exterior concept renders</td><td><span class="dot d-g"></span>3 concepts (DALL-E 3)</td><td>+ ControlNet precision</td></tr>
+      <tr><td>Interior renders</td><td><span class="dot d-g"></span>Living + kitchen + bedroom</td><td>All rooms</td></tr>
+      <tr><td>Floor plan</td><td><span class="dot d-y"></span>Schematic diagram</td><td>Scaled plan + room labels</td></tr>
+      <tr><td>Refinement chat</td><td><span class="dot d-g"></span>Text → re-render</td><td>Voice input + comparison view</td></tr>
+      <tr><td>Export package</td><td><span class="dot d-y"></span>PDF mood board</td><td>Full brief + BIM export</td></tr>
+      <tr><td>Architect hand-off</td><td><span class="dot d-r"></span>Not in MVP</td><td>JSON brief + Revit template</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Technical Challenges</h3>
+  <div class="grid2">
+    <div class="card card-w">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <div class="card-title">Multi-image Style Coherence</div><span class="badge b-red">Hard</span>
+      </div>
+      <div class="card-body">Aggregating style from 10 diverse images without averaging into a bland result. Fix: weight by client priority labels + cluster conflicts into "primary vs accent" axes.</div>
+    </div>
+    <div class="card card-w">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <div class="card-title">Exterior ↔ Interior Consistency</div><span class="badge b-red">Hard</span>
+      </div>
+      <div class="card-body">Ensuring the same palette appears in both render types. Fix: shared structured prompt with locked palette + material tokens injected into every generation call.</div>
+    </div>
+    <div class="card card-w">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <div class="card-title">Floor Plan Generation</div><span class="badge b-yellow">Medium</span>
+      </div>
+      <div class="card-body">Generating spatially valid floor plans. Fix: fine-tuned SDXL on architectural floor plan datasets + room detection validation post-processing.</div>
+    </div>
+    <div class="card card-w">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <div class="card-title">Latency in Live Refinement</div><span class="badge b-yellow">Medium</span>
+      </div>
+      <div class="card-body">Re-generating renders per chat turn is slow. Fix: progressive quality (thumbnail → full-res) via async job queue with streaming partial updates.</div>
+    </div>
+  </div>
+
+
+  <hr class="divider" />
+
+
+  
+  <div class="section-label">06 — The Pitch</div>
+  <h2>Why This Wins</h2>
+
+  <div class="callout">
+    <p style="font-size:15px;font-weight:700;color:#1f2328">"ArchMind AI turns a client's Pinterest board into a full architectural concept — exterior, interior, floor plan, and material palette — in one conversation."</p>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card card-w"><div class="card-title">Viscerally Demonstrable</div><div class="card-body">Drop 5 images → watch a house be designed in real-time. Judges see the magic instantly. No explanation needed.</div></div>
+    <div class="card card-w"><div class="card-title">Real Market Pain</div><div class="card-body">The discovery-to-concept phase costs clients thousands in consultant fees. $300B global AEC market with a clear wedge entry.</div></div>
+    <div class="card card-w"><div class="card-title">Technically Novel</div><div class="card-body">Design DNA extraction + multi-image aggregation + exterior/interior coherence is a genuinely novel AI composition, not a wrapper.</div></div>
+    <div class="card card-w"><div class="card-title">Proven Gap</div><div class="card-body">13 tools surveyed. None covers the full pipeline. The closest competitors address single slices only.</div></div>
+  </div>
+
+  <h3>Business Model</h3>
+  <table>
+    <thead><tr><th>Tier</th><th>Target</th><th>Price</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Free</strong></td><td>Homeowners</td><td>$0</td><td>1 project, 5 images, watermarked renders</td></tr>
+      <tr><td><strong>Client Pro</strong></td><td>Self-builders</td><td>$29/mo</td><td>Unlimited projects, HD renders, PDF export</td></tr>
+      <tr><td><strong>Studio</strong></td><td>Design firms</td><td>$149/mo</td><td>Client-sharing, brand kit, BIM export, API access</td></tr>
+      <tr><td><strong>Enterprise</strong></td><td>Developers</td><td>Custom</td><td>White-label, bulk generation, CRM integration</td></tr>
+    </tbody>
+  </table>
+
+  <h3>48-Hour Hackathon Plan</h3>
+  <div class="callout green"><p><strong>Hours 0–6:</strong> Environment setup, OpenAI API integration, Next.js project scaffold, image upload pipeline.</p></div>
+  <div class="callout green" style="margin-top:6px"><p><strong>Hours 6–18:</strong> Design DNA engine — GPT-4o Vision multi-image analysis, palette extraction, structured JSON output.</p></div>
+  <div class="callout green" style="margin-top:6px"><p><strong>Hours 18–32:</strong> DALL-E 3 render pipeline, consistent prompt builder, chat refinement loop, full frontend UI.</p></div>
+  <div class="callout green" style="margin-top:6px"><p><strong>Hours 32–42:</strong> Polish UI, PDF export, end-to-end demo scenario preparation.</p></div>
+  <div class="callout green" style="margin-top:6px"><p><strong>Hours 42–48:</strong> Rehearse demo, record video walkthrough, finalise submission.</p></div>
+
+  <h3>Team Roles</h3>
+  <table>
+    <thead><tr><th>Role</th><th>Responsibilities</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AI/ML Engineer</strong></td><td>GPT-4o Vision, prompt engineering, DALL-E pipeline, IP-Adapter setup</td></tr>
+      <tr><td><strong>Full-Stack Developer</strong></td><td>Next.js frontend, API routes, WebSocket chat, image display</td></tr>
+      <tr><td><strong>UI/UX Designer</strong></td><td>Interface design, DNA panel, mood board compositor</td></tr>
+      <tr><td><strong>Architecture Expert</strong></td><td>Validates design outputs, writes style taxonomy, ensures spatial correctness</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">Made with IBM Bob</div>
+</div>
+</body>
+</html>
